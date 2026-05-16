@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MediCore — Hospital Patient Record System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6L12 2z" fill="var(--teal)" opacity="0.2"/>
+          <path d="M11 9h2v2h2v2h-2v2h-2v-2H9v-2h2V9z" fill="var(--teal)"/>
+          <path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6L12 2z" stroke="var(--teal)" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <div class="brand-name">MediCore</div>
+        <div class="brand-sub">Hospital System</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-view="dashboard" onclick="switchView('dashboard')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Dashboard
+      </button>
+      <div class="nav-section-label">Patients</div>
+      <button class="nav-item" data-view="patients" onclick="switchView('patients')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+        All Patients
+      </button>
+      <button class="nav-item" data-view="add-patient" onclick="switchView('add-patient')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+        Add Patient
+      </button>
+      <button class="nav-item" data-view="search" onclick="switchView('search')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Search
+      </button>
+      <div class="nav-section-label">Hospital</div>
+      <button class="nav-item" data-view="doctors" onclick="switchView('doctors')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>
+        Doctors
+      </button>
+      <button class="nav-item" data-view="wards" onclick="switchView('wards')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Wards
+      </button>
+      <button class="nav-item" data-view="medications" onclick="switchView('medications')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+        Medications
+      </button>
+      <div class="nav-section-label">Admin</div>
+      <button class="nav-item" data-view="users" onclick="switchView('users')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+        Users
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-pill">
+        <div class="user-avatar">DR</div>
+        <div>
+          <div class="user-name">Dr. Admin</div>
+          <div class="user-role">Chief Physician</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="page-title" id="pageTitle">Dashboard</h1>
+        <div class="breadcrumb" id="breadcrumb">Home / Dashboard</div>
+      </div>
+      <div class="topbar-right">
+        <div class="date-badge" id="dateBadge"></div>
+        <button class="btn-primary" onclick="switchView('add-patient')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M12 5v14M5 12h14"/></svg>
+          New Patient
+        </button>
+      </div>
+    </header>
+
+    <!-- ── DASHBOARD ── -->
+    <section class="view active" id="view-dashboard">
+      <div class="stats-grid">
+        <div class="stat-card teal-accent">
+          <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+          <div class="stat-data"><div class="stat-value" id="stat-total">0</div><div class="stat-label">Total Patients</div></div>
+        </div>
+        <div class="stat-card blue-accent">
+          <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+          <div class="stat-data"><div class="stat-value" id="stat-today">0</div><div class="stat-label">Admitted Today</div></div>
+        </div>
+        <div class="stat-card green-accent">
+          <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></div>
+          <div class="stat-data"><div class="stat-value" id="stat-doctors">0</div><div class="stat-label">Doctors</div></div>
+        </div>
+        <div class="stat-card orange-accent">
+          <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 9v4M12 17h.01"/><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg></div>
+          <div class="stat-data"><div class="stat-value" id="stat-critical">0</div><div class="stat-label">Critical</div></div>
+        </div>
+        <div class="stat-card purple-accent">
+          <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+          <div class="stat-data"><div class="stat-value" id="stat-wards">0</div><div class="stat-label">Wards</div></div>
+        </div>
+        <div class="stat-card red-accent">
+          <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div>
+          <div class="stat-data"><div class="stat-value" id="stat-medications">0</div><div class="stat-label">Medications</div></div>
+        </div>
+        <div class="stat-card pink-accent">
+          <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg></div>
+          <div class="stat-data"><div class="stat-value" id="stat-users">0</div><div class="stat-label">Staff Users</div></div>
+        </div>
+        <div class="stat-card gray-accent">
+          <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12l2 2 4-4"/><path d="M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg></div>
+          <div class="stat-data"><div class="stat-value" id="stat-discharged">0</div><div class="stat-label">Discharged</div></div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Recent Patients</h2>
+            <button class="link-btn" onclick="switchView('patients')">View All →</button>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Patient</th><th>Age</th><th>Diagnosis</th><th>Status</th></tr></thead>
+              <tbody id="recentTbody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h2 class="card-title">Gender Distribution</h2></div>
+          <div class="donut-chart-wrap">
+            <svg class="donut-svg" viewBox="0 0 140 140">
+              <circle cx="70" cy="70" r="54" fill="none" stroke="var(--border)" stroke-width="20"/>
+              <circle id="maleSeg" cx="70" cy="70" r="54" fill="none" stroke="var(--teal)" stroke-width="20" stroke-dasharray="0 339.3" stroke-linecap="round" transform="rotate(-90 70 70)"/>
+              <circle id="femaleSeg" cx="70" cy="70" r="54" fill="none" stroke="#e879a0" stroke-width="20" stroke-dasharray="0 339.3" stroke-linecap="round" transform="rotate(-90 70 70)"/>
+              <text x="70" y="65" text-anchor="middle" class="donut-count" id="donutCount">0</text>
+              <text x="70" y="80" text-anchor="middle" class="donut-label">Patients</text>
+            </svg>
+            <div class="donut-legend">
+              <div class="legend-item"><span class="dot" style="background:var(--teal)"></span>Male (<span id="maleCount">0</span>)</div>
+              <div class="legend-item"><span class="dot" style="background:#e879a0"></span>Female (<span id="femaleCount">0</span>)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── ALL PATIENTS ── -->
+    <section class="view" id="view-patients">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Patient Registry</h2>
+          <div class="search-inline">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="text" placeholder="Quick search..." id="quickSearch" oninput="renderPatients()"/>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>ID</th><th>Name</th><th>Age</th><th>Gender</th><th>Contact</th><th>Diagnosis</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="allPatientsTbody"></tbody>
+          </table>
+        </div>
+        <div id="emptyState" class="empty-state" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" width="48" height="48"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          <p>No patients found.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── ADD PATIENT ── -->
+    <section class="view" id="view-add-patient">
+      <div class="form-layout">
+        <div class="card">
+          <div class="card-header"><h2 class="card-title" id="patientFormTitle">Register New Patient</h2></div>
+          <form id="patientForm" onsubmit="savePatient(event)" autocomplete="off">
+            <input type="hidden" id="editPatientId"/>
+            <div class="form-section">
+              <div class="form-section-label">Personal Information</div>
+              <div class="form-row">
+                <div class="form-group"><label>Full Name <span class="req">*</span></label><input type="text" id="fName" placeholder="e.g. John Mathew" required/></div>
+                <div class="form-group"><label>Age <span class="req">*</span></label><input type="number" id="fAge" placeholder="e.g. 34" min="0" max="150" required/></div>
+              </div>
+              <div class="form-row">
+                <div class="form-group"><label>Gender <span class="req">*</span></label>
+                  <select id="fGender" required><option value="">Select gender</option><option>Male</option><option>Female</option><option>Other</option></select>
+                </div>
+                <div class="form-group"><label>Blood Group</label>
+                  <select id="fBlood"><option value="">Select blood group</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group"><label>Contact <span class="req">*</span></label><input type="tel" id="fContact" placeholder="+91 9876543210" required/></div>
+                <div class="form-group"><label>Email</label><input type="email" id="fEmail" placeholder="patient@email.com"/></div>
+              </div>
+              <div class="form-group full-width"><label>Address</label><input type="text" id="fAddress" placeholder="Street, City, State"/></div>
+            </div>
+            <div class="form-section">
+              <div class="form-section-label">Medical Details</div>
+              <div class="form-row">
+                <div class="form-group"><label>Diagnosis <span class="req">*</span></label><input type="text" id="fDiagnosis" placeholder="e.g. Type 2 Diabetes" required/></div>
+                <div class="form-group"><label>Attending Doctor</label><input type="text" id="fDoctor" placeholder="Dr. Name"/></div>
+              </div>
+              <div class="form-row">
+                <div class="form-group"><label>Ward / Room</label><input type="text" id="fWard" placeholder="e.g. ICU / Room 204"/></div>
+                <div class="form-group"><label>Status</label>
+                  <select id="fStatus"><option value="Admitted">Admitted</option><option value="Discharged">Discharged</option><option value="Critical">Critical</option><option value="Observation">Observation</option></select>
+                </div>
+              </div>
+              <div class="form-group full-width"><label>Medical History</label><textarea id="fHistory" rows="3" placeholder="Previous conditions, surgeries, allergies..."></textarea></div>
+              <div class="form-group full-width"><label>Treatment Plan</label><textarea id="fTreatment" rows="3" placeholder="Current medications, procedures..."></textarea></div>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="btn-secondary" onclick="resetPatientForm()">Clear</button>
+              <button type="submit" class="btn-primary" id="patientSubmitBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v14a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                Save Patient
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SEARCH ── -->
+    <section class="view" id="view-search">
+      <div class="card search-card">
+        <div class="search-hero">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="36" height="36"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" class="search-big" id="bigSearch" placeholder="Search by name, diagnosis, ID..." oninput="performSearch()"/>
+        </div>
+        <div class="search-filters">
+          <select id="filterGender" onchange="performSearch()"><option value="">All Genders</option><option>Male</option><option>Female</option><option>Other</option></select>
+          <select id="filterStatus" onchange="performSearch()"><option value="">All Statuses</option><option>Admitted</option><option>Discharged</option><option>Critical</option><option>Observation</option></select>
+          <select id="filterBlood" onchange="performSearch()"><option value="">All Blood Groups</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select>
+        </div>
+      </div>
+      <div class="card" id="searchResultsCard" style="display:none">
+        <div class="card-header"><h2 class="card-title">Results <span class="result-count" id="resultCount"></span></h2></div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>ID</th><th>Name</th><th>Age</th><th>Gender</th><th>Diagnosis</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="searchTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── DOCTORS ── -->
+    <section class="view" id="view-doctors">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Doctors</h2>
+          <button class="btn-primary" onclick="openDoctorForm()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M12 5v14M5 12h14"/></svg>
+            Add Doctor
+          </button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>ID</th><th>Name</th><th>Specialty</th><th>Department</th><th>Contact</th><th>Email</th><th>Actions</th></tr></thead>
+            <tbody id="doctorsTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── WARDS ── -->
+    <section class="view" id="view-wards">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Wards</h2>
+          <button class="btn-primary" onclick="openWardForm()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M12 5v14M5 12h14"/></svg>
+            Add Ward
+          </button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>ID</th><th>Name</th><th>Type</th><th>Capacity</th><th>Floor</th><th>Actions</th></tr></thead>
+            <tbody id="wardsTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── MEDICATIONS ── -->
+    <section class="view" id="view-medications">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Medications</h2>
+          <button class="btn-primary" onclick="openMedForm()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M12 5v14M5 12h14"/></svg>
+            Add Medication
+          </button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>ID</th><th>Patient ID</th><th>Medicine</th><th>Dosage</th><th>Frequency</th><th>Start</th><th>End</th><th>Actions</th></tr></thead>
+            <tbody id="medicationsTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── USERS ── -->
+    <section class="view" id="view-users">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Staff Users</h2>
+          <button class="btn-primary" onclick="openUserForm()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M12 5v14M5 12h14"/></svg>
+            Add User
+          </button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Created</th><th>Actions</th></tr></thead>
+            <tbody id="usersTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+    <div class="modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
