@@ -398,22 +398,7 @@ All tables are in **3rd Normal Form (3NF)**:
 
 ---
 
-## 📌 Future Improvements
 
-- [ ] Add appointment scheduling module
-- [ ] Lab results / test reports upload (PDF)
-- [ ] Role-based access control (RBAC) with Flask-Login
-- [ ] REST API layer for mobile app integration
-- [ ] Audit logging for all CRUD operations
-- [ ] Export patient records as PDF
-
----
-
-## 👨‍💻 Author
-
-**Muhammed Aman**  
-B.Tech CSE (Cyber Security) — MITS, Kochi  
-GitHub: [@mhmdaman](https://github.com/mhmdaman)
 
 ---
 
